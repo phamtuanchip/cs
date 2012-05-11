@@ -3,13 +3,18 @@
 }
 
 .UICalendarPortlet .UIRemoteCalendar #id-username .FieldComponent{
-  padding-left:5px;
+  padding-left:17px;
 }
 
 .UICalendarPortlet .UIRemoteCalendar #id-password .FieldComponent {
-  padding-left: 7px;
+  padding-left: 20px;
 }
 
 .UICalendarPortlet .UIRemoteCalendar .InputFieldLabel {
   line-height: 30px;
+}
+
+.UICalendarPortlet .UICalendarPopupAction .PopupContent .UIFormGrid {
+	margin: auto;
+	width: auto;
 }
