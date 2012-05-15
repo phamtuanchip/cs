@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.exoplatform.cs</groupId>
     <artifactId>cs</artifactId>
-    <version>2.2.10-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>exo.cs.eXoApplication</artifactId>
   <packaging>pom</packaging>
@@ -12,11 +12,14 @@
   <modules>
     <module>common</module>
     <module>calendar</module>
+    <module>organization</module>
+    <!--
     <module>contact</module>
     <module>mail</module>
     <module>content</module>
     <module>chat</module>
     <module>chatbar</module>
-    <module>organization</module>
+    -->
+   
   </modules>
 </project>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.exoplatform.cs</groupId>
     <artifactId>exo.cs.web</artifactId>
-    <version>2.2.10-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>exo.cs.web.webservice</artifactId>
   <packaging>jar</packaging>
@@ -54,6 +54,7 @@
       <version>${org.exoplatform.jcr.version}</version>
       <scope>provided</scope>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.exoplatform.cs</groupId>
       <artifactId>exo.cs.eXoApplication.mail.service</artifactId>
@@ -66,6 +67,7 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
+    -->
     <dependency>
       <groupId>commons-chain</groupId>
       <artifactId>commons-chain</artifactId>

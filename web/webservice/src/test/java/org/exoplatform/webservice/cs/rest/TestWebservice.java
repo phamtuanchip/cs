@@ -37,7 +37,6 @@ import org.exoplatform.services.rest.impl.MultivaluedMapImpl;
 import org.exoplatform.services.rest.impl.RuntimeDelegateImpl;
 import org.exoplatform.services.rest.tools.ByteArrayContainerResponseWriter;
 import org.exoplatform.webservice.cs.calendar.CalendarWebservice;
-import org.exoplatform.webservice.cs.mail.MailWebservice;
 
 /**
  * Created by The eXo Platform SARL Author : Volodymyr Krasnikov
@@ -47,7 +46,6 @@ import org.exoplatform.webservice.cs.mail.MailWebservice;
 public class TestWebservice extends AbstractResourceTest {
 
   CalendarWebservice calendarWebservice;
-  MailWebservice mailWebservice;
   CalendarService calendarService;
 
   static final String             baseURI = "";
@@ -56,12 +54,10 @@ public class TestWebservice extends AbstractResourceTest {
     RuntimeDelegate.setInstance(new RuntimeDelegateImpl());
     super.setUp();
     calendarWebservice = (CalendarWebservice) container.getComponentInstanceOfType(CalendarWebservice.class);
-    mailWebservice = (MailWebservice) container.getComponentInstanceOfType(MailWebservice.class);
     calendarService = (MockCalendarService) container.getComponentInstanceOfType(MockCalendarService.class);
     
     registry(calendarWebservice);
-    registry(mailWebservice);
-    
+     
     //registry(calendarService);
   }
 
@@ -229,58 +225,6 @@ public class TestWebservice extends AbstractResourceTest {
 
   }
   
-  public void testUnreadMail() throws Exception {
-    MultivaluedMap<String, String> h = new MultivaluedMapImpl();
-    String username = "root";
-    h.putSingle("username", username);
-    String mailURI = "/cs/mail/unreadMail/accId/folderId/tagId/5";
-    ByteArrayContainerResponseWriter writer = new ByteArrayContainerResponseWriter();
-    ContainerResponse response = service("GET", mailURI, baseURI, h, null, writer);
-    assertNotNull(response);
-    if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())
-      throw new AssertionFailedError("service not found");
-    //assertNotSame(Response.Status.NOT_FOUND.getStatusCode() + "", response.getStatus() + "");
-  }
-  
-  public void testgetAccounts() throws Exception {
-    MultivaluedMap<String, String> h = new MultivaluedMapImpl();
-    String username = "root";
-    h.putSingle("username", username);
-    String mailURI = "/cs/mail/getAccounts/";
-    ByteArrayContainerResponseWriter writer = new ByteArrayContainerResponseWriter();
-    ContainerResponse response = service("GET", mailURI, baseURI, h, null, writer);
-    assertNotNull(response);
-    if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())
-      throw new AssertionFailedError("service not found");
-    //assertNotSame(Response.Status.NOT_FOUND.getStatusCode() + "", response.getStatus() + "");
-  }
-  
-  public void testgetFoldersTags() throws Exception {
-    MultivaluedMap<String, String> h = new MultivaluedMapImpl();
-    String username = "root";
-    h.putSingle("username", username);
-    String mailURI = "/cs/mail/getFoldersTags/accId";
-    ByteArrayContainerResponseWriter writer = new ByteArrayContainerResponseWriter();
-    ContainerResponse response = service("GET", mailURI, baseURI, h, null, writer);
-    assertNotNull(response);
-    if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())
-      throw new AssertionFailedError("service not found");
-    //assertNotSame(Response.Status.NOT_FOUND.getStatusCode() + "", response.getStatus() + "");
-  }
-  
-  public void testSearchUser() throws Exception{
-    MultivaluedMap<String, String> h = new MultivaluedMapImpl();
-    String username = "root";
-    h.putSingle("username", username);
-    String keyword = "joh";
-    ContainerResponse response = null;
-    ByteArrayContainerResponseWriter writer = new ByteArrayContainerResponseWriter();
-    String mailURI = "/cs/mail/searchuser/" + keyword;
-    response = service("GET", mailURI, baseURI, h, null, writer);
-    assertNotNull(response);
     
-    if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())
-      throw new AssertionFailedError("service not found");
-  }
   
 }

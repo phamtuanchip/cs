@@ -20,8 +20,6 @@
     <type>org.exoplatform.webservice.cs.calendar.CalendarWebservice</type>
   </component>
   
-  <component>
-    <type>org.exoplatform.webservice.cs.mail.MailWebservice</type>
-  </component>
+   
   
 </configuration>

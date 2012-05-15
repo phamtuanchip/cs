@@ -155,7 +155,7 @@ public class CalendarDataInjector extends DataInjector {
     maxTasks = getParam(initParams, "mTa", maxTasks);
     baseURL = getParam(initParams, "baseURL", baseURL);
     typeOfInject = getParam(initParams, "typeOfInject", typeOfInject);
-    randomize = getParam(initParams, "rand");
+    randomize =(boolean)getParam(initParams, "rand");
   }
 
   @Override
