@@ -33,26 +33,6 @@
   <external-component-plugins>
     <target-component>org.exoplatform.services.bench.DataInjectorService</target-component>
     <component-plugin>
-      <name>ContactDataInjector</name>
-      <set-method>addInjector</set-method>
-      <type>org.exoplatform.cs.bench.ContactDataInjector</type>
-      <description>inject data for Contact</description>
-      <init-params>
-        <value-param>
-          <name>mA</name> <!-- maximum number of address books -->
-          <value>5</value>
-        </value-param>
-        <value-param>
-          <name>mC</name> <!-- maximum number of contacts per a address books -->
-          <value>10</value>
-        </value-param>
-        <value-param>
-          <name>rand</name> <!-- randomize or not -->
-          <value>false</value>
-        </value-param>
-      </init-params>
-    </component-plugin>
-    <component-plugin>
       <name>CalendarDataInjector</name>
       <set-method>addInjector</set-method>
       <type>org.exoplatform.cs.bench.CalendarDataInjector</type>
@@ -88,29 +68,5 @@
         </value-param>
       </init-params>
     </component-plugin>
-    <!-- component-plugin>
-      <name>MailDataInjector</name>
-      <set-method>addInjector</set-method>
-      <type>org.exoplatform.cs.bench.MailDataInjector</type>
-      <description>inject data for Contact</description>
-      <init-params>
-        <value-param>
-          <name>mA</name> 
-          <value>2</value>
-        </value-param>
-        <value-param>
-          <name>mM</name> 
-          <value>100</value>
-        </value-param>
-        <value-param>
-          <name>rand</name> 
-          <value>false</value>
-        </value-param>
-        <value-param>
-          <name>attSize</name> 
-          <value>100</value>
-        </value-param>
-      </init-params>
-    </component-plugin -->
   </external-component-plugins>
 </configuration>

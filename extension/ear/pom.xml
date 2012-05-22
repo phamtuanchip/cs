@@ -16,111 +16,7 @@
       <artifactId>exo.cs.web.webservice</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.mail.service</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.mail.webapp</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
-    </dependency>
     
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.contact.service</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.contact.webapp</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.content.service</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.content.webapp</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
-    </dependency>
-  <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.organization.service</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.chat.service</artifactId>
-      <version>${project.version}</version>    
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.chat.webapp</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.chatbar.webapp</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
-    </dependency>
-    
-     <jarModule>
-              <groupId>org.exoplatform.cs</groupId>
-              <artifactId>exo.cs.eXoApplication.contact.service</artifactId>
-              <includeInApplicationXml>true</includeInApplicationXml>
-            </jarModule>
-            <webModule>
-              <groupId>org.exoplatform.cs</groupId>
-              <artifactId>exo.cs.eXoApplication.contact.webapp</artifactId>
-              <contextRoot>contact</contextRoot>
-              <bundleFileName>contact.war</bundleFileName>
-            </webModule>
-            <jarModule>
-              <groupId>org.exoplatform.cs</groupId>
-              <artifactId>exo.cs.eXoApplication.chat.service</artifactId>
-              <includeInApplicationXml>true</includeInApplicationXml>
-            </jarModule>
-            <webModule>
-              <groupId>org.exoplatform.cs</groupId>
-              <artifactId>exo.cs.eXoApplication.chat.webapp</artifactId>
-              <contextRoot>chat</contextRoot>
-              <bundleFileName>chat.war</bundleFileName>
-            </webModule>
-            
-            <jarModule>
-              <groupId>org.exoplatform.cs</groupId>
-              <artifactId>exo.cs.eXoApplication.organization.service</artifactId>
-              <includeInApplicationXml>true</includeInApplicationXml>
-            </jarModule>
-            <webModule>
-              <groupId>org.exoplatform.cs</groupId>
-              <artifactId>exo.cs.eXoApplication.chatbar.webapp</artifactId>
-              <contextRoot>chatbar</contextRoot>
-              <bundleFileName>chatbar.war</bundleFileName>
-            </webModule>
-            <jarModule>
-              <groupId>org.exoplatform.cs</groupId>
-              <artifactId>exo.cs.eXoApplication.content.service</artifactId>
-              <includeInApplicationXml>true</includeInApplicationXml>
-            </jarModule>
-            <webModule>
-              <groupId>org.exoplatform.cs</groupId>
-              <artifactId>exo.cs.eXoApplication.content.webapp</artifactId>
-              <contextRoot>content</contextRoot>
-              <bundleFileName>content.war</bundleFileName>
-            </webModule>
-    
-    -->
     <dependency>
       <groupId>org.exoplatform.cs</groupId>
       <artifactId>exo.cs.eXoApplication.calendar.service</artifactId>
@@ -274,20 +170,7 @@
               <contextRoot>cs-extension</contextRoot>
               <bundleFileName>cs.war</bundleFileName>
             </webModule>
-            <!--
-            <jarModule>
-              <groupId>org.exoplatform.cs</groupId>
-              <artifactId>exo.cs.eXoApplication.mail.service</artifactId>
-              <includeInApplicationXml>true</includeInApplicationXml>
-            </jarModule>
-            <webModule>
-              <groupId>org.exoplatform.cs</groupId>
-              <artifactId>exo.cs.eXoApplication.mail.webapp</artifactId>
-              <contextRoot>mail</contextRoot>
-              <bundleFileName>mail.war</bundleFileName>
-            </webModule>
             
-            -->
             <jarModule>
               <groupId>org.exoplatform.cs</groupId>
               <artifactId>exo.cs.eXoApplication.calendar.service</artifactId>

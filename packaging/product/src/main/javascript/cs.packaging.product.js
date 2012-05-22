@@ -31,10 +31,6 @@ function getProduct(version) {
   //portal.starter.deployName = "starter";
   //product.addDependencies(portal.starter);  
   
-  //FCK editor
-  portal.fck = new Project("org.exoplatform.commons", "exo.platform.commons.fck", "war", "${org.exoplatform.commons.version}");
-  portal.fck.deployName = "fck";
-  product.addDependencies(portal.fck);	
 
 //cometd (requried for CS)
   product.addDependencies(cs.comet.cometd);
@@ -43,11 +39,6 @@ function getProduct(version) {
   product.addDependencies(cs.eXoApplication.upgrade);
   product.addDependencies(cs.eXoApplication.common);
   product.addDependencies(cs.eXoApplication.calendar);
-  product.addDependencies(cs.eXoApplication.contact);
-  product.addDependencies(cs.eXoApplication.mail);
-  product.addDependencies(cs.eXoApplication.chat);
-  product.addDependencies(cs.eXoApplication.chatbar);
-  product.addDependencies(cs.eXoApplication.content);
   product.addDependencies(cs.web.csResources); 
   product.addDependencies(cs.web.webservice);
   product.addDependencies(cs.commons.extension);

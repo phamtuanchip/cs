@@ -62,24 +62,8 @@
                   <string>csResources</string>
                 </value>
                 <value>
-                  <string>mail</string>
-                </value>
-                <value>
-                  <string>chat</string>
-                </value>
-                <value>
                   <string>calendar</string>
                 </value>
-                <value>
-                  <string>contact</string>
-                </value>
-                <value>
-                  <string>content</string>
-                </value>
-                <value>
-                  <string>chatbar</string>
-                </value>
-                <!--<value> <string>cs</string> </value> -->
                 <value>
                   <string>csdemo</string>
                 </value>
@@ -88,9 +72,6 @@
                 </value>
                 <value>
                   <string>cometd-csdemo</string>
-                </value>
-                <value>
-                  <string>fck</string>
                 </value>
               </collection>
             </field>

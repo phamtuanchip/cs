@@ -35,6 +35,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shindig.social.opensocial.model.Account;
 import org.exoplatform.calendar.CalendarUtils;
 import org.exoplatform.calendar.service.Attachment;
 import org.exoplatform.calendar.service.Calendar;
@@ -42,24 +43,20 @@ import org.exoplatform.calendar.service.CalendarEvent;
 import org.exoplatform.calendar.service.CalendarService;
 import org.exoplatform.calendar.service.CalendarSetting;
 import org.exoplatform.calendar.service.Reminder;
+import org.exoplatform.calendar.service.Utils;
 import org.exoplatform.calendar.webui.CalendarView;
 import org.exoplatform.calendar.webui.UICalendarPortlet;
 import org.exoplatform.calendar.webui.UICalendarViewContainer;
 import org.exoplatform.calendar.webui.UIFormDateTimePicker;
 import org.exoplatform.calendar.webui.UIListContainer;
 import org.exoplatform.calendar.webui.UIMiniCalendar;
-import org.exoplatform.contact.service.ContactService;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.download.DownloadResource;
 import org.exoplatform.download.DownloadService;
 import org.exoplatform.download.InputStreamDownloadResource;
-import org.exoplatform.mail.service.Account;
-import org.exoplatform.mail.service.BufferAttachment;
-import org.exoplatform.mail.service.MailService;
-import org.exoplatform.mail.service.Message;
-import org.exoplatform.mail.service.Utils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.mail.MailService;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.User;
 import org.exoplatform.upload.UploadService;
@@ -75,18 +72,18 @@ import org.exoplatform.webui.core.model.SelectItemOption;
 import org.exoplatform.webui.core.model.SelectOption;
 import org.exoplatform.webui.core.model.SelectOptionGroup;
 import org.exoplatform.webui.event.Event;
-import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.event.Event.Phase;
+import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.form.UIForm;
 import org.exoplatform.webui.form.UIFormCheckBoxInput;
 import org.exoplatform.webui.form.UIFormInputInfo;
 import org.exoplatform.webui.form.UIFormInputWithActions;
+import org.exoplatform.webui.form.UIFormInputWithActions.ActionData;
 import org.exoplatform.webui.form.UIFormRadioBoxInput;
 import org.exoplatform.webui.form.UIFormSelectBox;
 import org.exoplatform.webui.form.UIFormSelectBoxWithGroups;
 import org.exoplatform.webui.form.UIFormTabPane;
 import org.exoplatform.webui.form.UIFormTextAreaInput;
-import org.exoplatform.webui.form.UIFormInputWithActions.ActionData;
 import org.exoplatform.webui.form.ext.UIFormComboBox;
 import org.exoplatform.webui.organization.account.UIUserSelector;
 
@@ -650,27 +647,7 @@ public class UIEventForm extends UIFormTabPane implements UIPopupComponent, UISe
     UIFormDateTimePicker untilField = eventDetailTab.getChildById(UIEventDetailTab.FIELD_REPEAT_UNTIL);
     return  untilField.getValue();
   }
-  
-  /*protected Date getEventRepeatUntilDate(String dateFormat) throws Exception {
-    UIEventDetailTab eventDetailTab =  getChildById(TAB_EVENTDETAIL) ;
-    UIFormDateTimePicker untilField = eventDetailTab.getChildById(UIEventDetailTab.FIELD_REPEAT_UNTIL) ;
-    WebuiRequestContext context = WebuiRequestContext.getCurrentInstance() ;
-    Locale locale = context.getParentAppRequestContext().getLocale() ;
-    
-    DateFormat df = new SimpleDateFormat(dateFormat, locale) ;
-    df.setCalendar(CalendarUtils.getInstanceOfCurrentCalendar()) ;
-    return df.parse(untilField.getValue()) ;
-  }
-  
-  protected void setEventRepeatUntil(Date date,String dateFormat) {
-    UIEventDetailTab eventDetailTab =  getChildById(TAB_EVENTDETAIL) ;
-    UIFormDateTimePicker untilField = eventDetailTab.getChildById(UIEventDetailTab.FIELD_REPEAT_UNTIL) ;
-    WebuiRequestContext context = WebuiRequestContext.getCurrentInstance() ;
-    Locale locale = context.getParentAppRequestContext().getLocale() ;
-    DateFormat df = new SimpleDateFormat(dateFormat, locale) ;
-    df.setCalendar(CalendarUtils.getInstanceOfCurrentCalendar()) ;
-    untilField.setValue(df.format(date)) ;
-  }*/
+   
   
   protected String getEventPlace() {
     UIEventDetailTab eventDetailTab =  getChildById(TAB_EVENTDETAIL) ;
@@ -1036,7 +1013,7 @@ public class UIEventForm extends UIFormTabPane implements UIPopupComponent, UISe
     }
   }
 
-  protected void sendMail(MailService svr, OrganizationService orSvr,CalendarSetting setting, Account acc, String fromId,  String toId, CalendarEvent event) throws Exception {
+  protected void sendMail(MailService svr, OrganizationService orSvr,CalendarSetting setting, String fromId,  String toId, CalendarEvent event) throws Exception {
     List<Attachment> atts = getAttachments(null, false);
     DateFormat df = new SimpleDateFormat(setting.getDateFormat() + " " + setting.getTimeFormat()) ;
     User invitor = orSvr.getUserHandler().findUserByName(CalendarUtils.getCurrentUser()) ;
@@ -1137,43 +1114,6 @@ public class UIEventForm extends UIFormTabPane implements UIPopupComponent, UISe
     values.append(event.getCalendarId()) ;
     values.append(CalendarUtils.SEMICOLON + " ") ;
     values.append(event.getId()) ;
-    if (acc != null) { // use cs-mail service 
-      List<org.exoplatform.mail.service.Attachment> attachments = new ArrayList<org.exoplatform.mail.service.Attachment>() ;
-      try {
-        CalendarService calService = CalendarUtils.getCalendarService() ;
-        OutputStream out = calService.getCalendarImportExports(CalendarService.ICALENDAR).exportEventCalendar(fromId, event.getCalendarId(), event.getCalType(), event.getId()) ;
-        ByteArrayInputStream is = new ByteArrayInputStream(out.toString().getBytes()) ;
-        BufferAttachment bf = new BufferAttachment() ;
-        bf.setInputStream(is) ;
-        bf.setName("icalendar.ics");
-        bf.setMimeType("text/calendar") ;
-
-        attachments.add(bf) ;
-        for(Attachment att : atts) {
-          bf = new BufferAttachment() ;
-          bf.setInputStream(att.getInputStream()) ;
-          bf.setName(att.getName());
-          bf.setMimeType(att.getMimeType()) ;
-          attachments.add(bf) ;
-        }
-      } catch (Exception e) {
-        if (log.isDebugEnabled()) {
-          log.debug("Fail to create attachment list", e);
-        }
-      }
-      for (String s : sbAddress.toString().split(CalendarUtils.COMMA)) {
-        Message message = new Message() ;
-        message.setSubject(sbSubject.toString()) ;
-        message.setMessageBody(getBodyMail(sbBody.toString(), eXoIdMap, s, invitor, event)) ;
-        message.setContentType(Utils.MIMETYPE_TEXTHTML) ;
-        message.setFrom(user.getEmail()) ;
-        message.setMessageTo(s);
-        message.setHeader(CalendarUtils.EXO_INVITATION , values.toString()) ;
-        message.setSendDate(new Date()) ;
-        message.setAttachements(attachments) ;
-        svr.sendMessage(user.getUserName(), acc.getId(), message) ;
-      }    
-    } else { // use kernel service
       CalendarService calService = CalendarUtils.getCalendarService() ;
       org.exoplatform.services.mail.MailService mService = getApplicationComponent(org.exoplatform.services.mail.impl.MailServiceImpl.class) ;
       org.exoplatform.services.mail.Attachment attachmentCal = new org.exoplatform.services.mail.Attachment() ;
@@ -1188,7 +1128,6 @@ public class UIEventForm extends UIFormTabPane implements UIPopupComponent, UISe
         if (log.isDebugEnabled()) {
           log.debug("Fail to create attachment", e);
         }
-      }     
       for (String s : sbAddress.toString().split(CalendarUtils.COMMA)) {
         if (CalendarUtils.isEmpty(s)) continue;
         org.exoplatform.services.mail.Message  message = new org.exoplatform.services.mail.Message(); 
@@ -1211,8 +1150,6 @@ public class UIEventForm extends UIFormTabPane implements UIPopupComponent, UISe
         mService.sendMessage(message) ;
       }
     }
-    ContactService contactService = (ContactService)PortalContainer.getComponent(ContactService.class) ;
-    contactService.saveAddress(CalendarUtils.getCurrentUser(), sbAddress.toString()) ;
   }
 
   private String getBodyMail(String sbBody,Map<String, String> eXoIdMap,String s,User invitor,CalendarEvent event) throws Exception {
@@ -1302,7 +1239,6 @@ public class UIEventForm extends UIFormTabPane implements UIPopupComponent, UISe
   
   private CalendarEvent sendInvitation(Event<UIEventForm> event, CalendarSetting calSetting, CalendarEvent calendarEvent) throws Exception {
     String username = WebuiRequestContext.getCurrentInstance().getRemoteUser();
-    Account acc = CalendarUtils.getMailService().getDefaultAccount(username);
     String toId = null;
     if (this.isAddNew_ || this.isChangedSignificantly) {
       toId = getParticipantValues();
@@ -1336,7 +1272,7 @@ public class UIEventForm extends UIFormTabPane implements UIPopupComponent, UISe
     }
     try {
       if (toId != null) {
-        sendMail(CalendarUtils.getMailService(), CalendarUtils.getOrganizationService(), calSetting, acc, username, toId, calendarEvent);
+        sendMail(CalendarUtils.getMailService(), CalendarUtils.getOrganizationService(), calSetting, username, toId, calendarEvent);
         List<String> parsUpdated = new LinkedList<String>();
         for (String parSt : calendarEvent.getParticipantStatus()) {
           String[] entry = parSt.split(":");

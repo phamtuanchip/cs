@@ -54,20 +54,7 @@
       <version>${org.exoplatform.jcr.version}</version>
       <scope>provided</scope>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.mail.service</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.cs</groupId>
-      <artifactId>exo.cs.eXoApplication.contact.service</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    -->
+    
     <dependency>
       <groupId>commons-chain</groupId>
       <artifactId>commons-chain</artifactId>

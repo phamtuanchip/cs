@@ -39,33 +39,7 @@
       <access-permissions>Everyone</access-permissions>
       <show-info-bar>false</show-info-bar>
     </portlet-application>
-   
-    <!--portlet-application>
-      <portlet>
-        <application-ref>csdemo</application-ref>
-        <portlet-ref>CSBannerPortlet</portlet-ref>
-      </portlet>
-      <access-permissions>Everyone</access-permissions>
-      <show-info-bar>false</show-info-bar>
-    </portlet-application>
     
-    <portlet-application>
-      <portlet>
-        <application-ref>web</application-ref>
-        <portlet-ref>NavigationPortlet</portlet-ref>
-      </portlet>
-      <access-permissions>Everyone</access-permissions>
-      <show-info-bar>false</show-info-bar>
-    </portlet-application>
-    
-    <portlet-application>
-      <portlet>
-        <application-ref>web</application-ref>
-        <portlet-ref>BreadcumbsPortlet</portlet-ref>
-      </portlet>
-      <access-permissions>Everyone</access-permissions>
-      <show-info-bar>false</show-info-bar>
-    </portlet-application-->
     
     <page-body> </page-body>
     
@@ -85,14 +59,7 @@
        <access-permissions>Everyone</access-permissions>
        <show-info-bar>false</show-info-bar>
      </portlet-application>
-    <portlet-application>
-      <portlet>
-        <application-ref>chatbar</application-ref>
-        <portlet-ref>ChatBarPortlet</portlet-ref>
-      </portlet>
-      <access-permissions>*:/platform/users</access-permissions>
-      <show-info-bar>false</show-info-bar>      
-    </portlet-application>
+    
    </portal-layout>
   
 </portal-config>

@@ -48,41 +48,19 @@
                 <value>
                   <string>cs-extension</string>
                 </value>
-                <!-- 
                 <value>
-                  <string>wsrp-producer</string>
-                </value>  
-                -->
-                                <value>
-                                  <string>cometd</string>
-                                </value>                
-                                <value>
-                                  <string>csResources</string>
-                                </value>   
-                                 <value>
-                                  <string>web</string>
-                                </value> 
-                                <value>
-                                  <string>mail</string>
-                                </value> 
-                                 <value>
-                                  <string>contact</string>
-                                </value>
-                                 <value>
-                                  <string>chat</string>
-                                </value> 
-                                <value>
-                                  <string>chatbar</string>
-                                </value>
-                                <value>
-                                  <string>content</string>
-                                </value>                                                                                                             
+                   <string>cometd</string>
+                </value>                
+                <value>
+                    <string>csResources</string>
+                </value>   
+                <value>
+                    <string>web</string>
+                </value>                                                                                                         
                 <value>
                   <string>calendar</string>
                 </value>   
-                <value>
-                          <string>fck</string>
-                        </value>                          
+                                          
               </collection>
             </field>
           </object>

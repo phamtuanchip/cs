@@ -363,6 +363,8 @@ public class Utils {
 
   public static final String SYNC_1YEAR                 = "1year";
 
+  public static final String MIMETYPE_TEXTHTML          = "text/html".intern();
+
   public static String[]     SYNC_PERIOD                = { SYNC_AUTO, SYNC_5MINS, SYNC_10MINS, SYNC_15MINS, SYNC_1HOUR, SYNC_1DAY, SYNC_1WEEK, SYNC_1YEAR };
 
   /**

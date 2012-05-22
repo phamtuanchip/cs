@@ -563,9 +563,7 @@
   </profiles>
 
   <modules>
-    <!--
     <module>component</module>
-    -->
     <module>web</module>
     <module>eXoApplication</module>
     <module>extension</module>

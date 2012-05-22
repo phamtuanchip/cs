@@ -10,10 +10,8 @@
   <packaging>pom</packaging>
   <name>eXo CS Components</name>
   <modules>
-    <!-- 
     <module>upgrade</module>
     <module>statistics</module>
-    -->
     <module>injector</module>
   </modules>
 </project>

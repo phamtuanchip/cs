@@ -39,11 +39,7 @@ function getModule(params) {
      addDependency(new Project("org.exoplatform.cs", "exo.cs.component.upgrade", "jar", module.version)).
      addDependency(new Project("org.exoplatform.commons", "exo.platform.commons.webui.ext", "jar", "${org.exoplatform.commons.version}"));
 
-  module.eXoApplication.mail =
-    new Project("org.exoplatform.cs", "exo.cs.eXoApplication.mail.webapp", "war", module.version).
-    addDependency(new Project("org.exoplatform.cs", "exo.cs.eXoApplication.mail.service", "jar",  module.version)).
-    addDependency(new Project("org.exoplatform.commons", "exo.platform.commons.webui", "jar", "${org.exoplatform.commons.version}"));
-  module.eXoApplication.mail.deployName = "mail";
+  
     
   module.eXoApplication.calendar =
     new Project("org.exoplatform.cs", "exo.cs.eXoApplication.calendar.webapp", "war", module.version).
@@ -53,34 +49,6 @@ function getModule(params) {
     addDependency(new Project("org.apache.jackrabbit", "jackrabbit-jcr-commons", "jar", "${org.apache.jackrabbit.version}"));
   module.eXoApplication.calendar.deployName = "calendar";
     
-  module.eXoApplication.contact =
-    new Project("org.exoplatform.cs", "exo.cs.eXoApplication.contact.webapp", "war", module.version).
-    addDependency(new Project("org.exoplatform.cs", "exo.cs.eXoApplication.contact.service", "jar",  module.version)).
-    addDependency(new Project("net.wimpi.pim", "jpim-0.1", "jar",  "${jpim-0.1.version}"));
-  module.eXoApplication.contact.deployName = "contact";
-  
-  module.eXoApplication.content =
-    new Project("org.exoplatform.cs", "exo.cs.eXoApplication.content.webapp", "war", module.version).
-
-addDependency(new Project("org.exoplatform.ecms", "exo-ecms-core-parser", "jar",  "2.3.5")).
-
-    addDependency(new Project("org.exoplatform.cs", "exo.cs.eXoApplication.content.service", "jar",  module.version));
-    
-  module.eXoApplication.content.deployName = "content";
-  
-  module.eXoApplication.chat =
-    new Project("org.exoplatform.cs", "exo.cs.eXoApplication.chat.webapp", "war", module.version).
-    addDependency(new Project("org.exoplatform.cs", "exo.cs.eXoApplication.chat.service", "jar", module.version).
-    addDependency(new Project("org.exoplatform.cs", "exo.cs.eXoApplication.organization.service", "jar", module.version)).
-    addDependency(new Project("jivesoftware", "smack", "jar", "${jivesoftware.smack.version}")).
-    addDependency(new Project("jivesoftware", "smackx", "jar", "${jivesoftware.smackx.version}")).
-    addDependency(new Project("org.jcrom", "jcrom", "jar", "${jcrom.version}")));
-  module.eXoApplication.chat.deployName = "chat";
-  
-  module.eXoApplication.chatbar =
-    new Project("org.exoplatform.cs", "exo.cs.eXoApplication.chatbar.webapp", "war", module.version) ;
-  module.eXoApplication.chatbar.deployName = "chatbar";
-  
   // CS resources and services
   module.web = {}
   module.web.webservice =
@@ -110,9 +78,7 @@ addDependency(new Project("org.exoplatform.ecms", "exo-ecms-core-parser", "jar",
   module.server.jboss.patchear = 
 	    new Project("org.exoplatform.cs", "exo.cs.server.jboss.patch-ear", "jar", module.version);
   
-  module.server.openfire = {};
-  module.server.openfire.patch = 
-    new Project("org.exoplatform.cs", "exo.cs.eXoApplication.organization.client.openfire", "jar", module.version);
+ 
       
   // CS demo 
   module.demo = {};
@@ -133,15 +99,7 @@ addDependency(new Project("org.exoplatform.ecms", "exo-ecms-core-parser", "jar",
     addDependency(ws.frameworks.servlet);
   module.demo.rest.deployName = "rest-csdemo"; 
        
-   /**
-   * Configure and deploy Openfire
-   */
-  module.configure = function(tasks, deployServers, serverMap) {
-  	if (deployServers != null) {
-      var server = serverMap.get("tomcat");
-      tasks.add(deployOpenfireServer(server, this));
-    }
-  };    
+   
    
    return module;
 }
@@ -150,36 +108,4 @@ addDependency(new Project("org.exoplatform.ecms", "exo-ecms-core-parser", "jar",
  * Configure and deploy Openfire for integrated chat on cs 
  */
 
-function deployOpenfireServer(mainServer, module) {
-	var deployServerTask = new TaskDescriptor("Release Dependency Task", eXo.env.dependenciesDir) ;
-  var server = {};
 
-  // We use only the local repository which must be defined in the repos list
-  server.openfireJarPath = new java.net.URL(eXo.env.m2Repos[0]).getPath();
-  server.openfireJarPath += "/" + module.server.openfire.patch.relativePath;
-  
-  server.cleanServer = "openfire-" + "${openfire.version}";
-  server.name = "exo-chatserver";
-  server.serverHome = eXo.env.workingDir + "/" + server.name;
-  server.deployLibDir = server.serverHome + "/lib";
-  server.openfireJar = "exo.cs.eXoApplication.organization.client.openfire-" + module.version + ".jar" ;
-  deployServerTask.description = "Deploy " + server.name + " ";
-	deployServerTask.execute = function() {
-    eXo.System.info("DELETE", "Delete " + server.serverHome);
-    eXo.core.IOUtil.remove(server.serverHome);
-		eXo.System.info("COPY", "Copy a clean server " + server.name);
-		eXo.core.IOUtil.cp(eXo.env.dependenciesDir + "/" + server.cleanServer, server.serverHome);
-    eXo.System.info("Gets the configuration file -in a buffer - of openfire (openfire.xml) from the library jar file");
-		//var configBuffer = eXo.core.IOUtil.getJarEntryContent(mainServer.deployLibDir+"/"+server.openfireJar, "openfire/openfire.xml") ;
-		var configBuffer = eXo.core.IOUtil.getJarEntryContent(server.openfireJarPath, "openfire/openfire.xml") ;
-		if (configBuffer == null) { eXo.System.info("ERROR", "Error retrieving config file from jar !"); return; }
-		// writes the buffer into the configuration file (openfire/conf/openfire.xml)
-		eXo.System.info("INFO", "Creating config file from buffer...");
-		eXo.core.IOUtil.createFile(server.serverHome+"/conf/openfire.xml", configBuffer);
-		// copies the exo openfire library to openfire server
-		eXo.System.info("INFO", "Copying exo openfire library file...");
-		eXo.core.IOUtil.cp(server.openfireJarPath, 
-						           server.deployLibDir + "/" + server.openfireJar);
-	}
-	return deployServerTask ;
-}

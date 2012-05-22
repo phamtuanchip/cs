@@ -12,14 +12,6 @@
   <modules>
     <module>common</module>
     <module>calendar</module>
-    <module>organization</module>
-    <!--
-    <module>contact</module>
-    <module>mail</module>
-    <module>content</module>
-    <module>chat</module>
-    <module>chatbar</module>
-    -->
    
   </modules>
 </project>

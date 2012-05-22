@@ -39,6 +39,17 @@ public class NewUserListener extends UserEventListener {
   final public static String CALENDAR_NAME = "defaultCalendar".intern();
   final public static String EVENT_CATEGORIES = "defaultEventCategories".intern();
   final public static String COMA = ",".intern();
+  
+  public static String   DEFAULTGROUP       = "default".intern();
+
+  public static String   ADDRESSESGROUP     = "addresses".intern();
+
+  public static String   ADDRESSESGROUPNAME = "collected-email-adresses".intern();
+
+  public static String   DEFAULTGROUPNAME   = "My contacts".intern();
+
+  public static String   DEFAULTGROUPDES    = "Default address book".intern();
+
 
   // Calendar Setting params
   final public static String ST_VIEW_TYPE                           = "viewType".intern();

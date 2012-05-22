@@ -18,19 +18,19 @@ package org.exoplatform.calendar.webui.popup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.exoplatform.calendar.CalendarUtils;
+import org.exoplatform.calendar.service.Utils;
+import org.exoplatform.calendar.service.impl.NewUserListener;
 import org.exoplatform.commons.utils.LazyPageList;
+import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.commons.utils.ListAccessImpl;
-import org.exoplatform.contact.service.AddressBook;
-import org.exoplatform.contact.service.Contact;
-import org.exoplatform.contact.service.ContactFilter;
-import org.exoplatform.contact.service.ContactService;
-import org.exoplatform.contact.service.SharedAddressBook;
-import org.exoplatform.contact.service.Utils;
-import org.exoplatform.contact.service.impl.NewUserListener;
+import org.exoplatform.services.organization.Group;
+import org.exoplatform.services.organization.OrganizationService;
+import org.exoplatform.services.organization.User;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
@@ -85,29 +85,15 @@ public class UIAddressForm extends UIForm implements UIPopupComponent {
   }
   private List<SelectItemOption<String>> getGroups() throws Exception {
     List<SelectItemOption<String>> options = new ArrayList<SelectItemOption<String>>() ;
-    ContactService contactService = getApplicationComponent(ContactService.class) ;
-    options.add(new SelectItemOption<String>("all", org.exoplatform.calendar.service.Utils.EMPTY_STR)) ;
-    for( AddressBook cg : contactService.getGroups(CalendarUtils.getCurrentUser())) {
-      options.add(new SelectItemOption<String>(cg.getName(), cg.getId())) ;
+    OrganizationService oService = getApplicationComponent(OrganizationService.class);
+    options.add(new SelectItemOption<String>("all", Utils.EMPTY_STR)) ;
+   Collection<Group> groups = oService.getGroupHandler().findGroupsOfUser(CalendarUtils.getCurrentUser());
+    for( Group g : groups) {
+      ListAccess<User> users = oService.getUserHandler().findUsersByGroupId(g.getId()) ;
+      for(User u : users.load(0, users.getSize())) {
+        options.add(new SelectItemOption<String>(u.getUserName(), u.getUserName())) ;
+      } 
     }
-    List<SharedAddressBook> addressList = contactService
-    .getSharedAddressBooks(CalendarUtils.getCurrentUser()) ;
-    for(SharedAddressBook sa : addressList) {
-      String name = org.exoplatform.calendar.service.Utils.EMPTY_STR ;
-      if(!CalendarUtils.isEmpty(sa.getSharedUserId())) name = sa.getSharedUserId() + "-" ;
-      options.add(new SelectItemOption<String>(name + sa.getName(), sa.getId())) ;
-    }
-    
-    List<String> publicAddressBookIds = contactService.getAllsPublicAddressBookIds(null);
-    if (!publicAddressBookIds.isEmpty()) {
-      for (String publicCg : publicAddressBookIds) {
-        options.add(new SelectItemOption<String>(CalendarUtils.getOrganizationService()
-                                                              .getGroupHandler()
-                                                              .findGroupById(publicCg)
-                                                              .getGroupName(), publicCg));
-      }
-    }
-    
     return options;
   }
 
@@ -127,30 +113,9 @@ public class UIAddressForm extends UIForm implements UIPopupComponent {
   }
   @SuppressWarnings("unchecked")
   public void setContactList(String groupId) throws Exception {
-    ContactFilter filter = new ContactFilter() ;
-    if(!CalendarUtils.isEmpty(groupId)) {
-      filter.setCategories(new String[]{groupId}) ;
-    }  
-    setContactList(filter);
+   //TODO implement by new code there 
   }
-  @SuppressWarnings("unchecked")
-  public void setContactList(ContactFilter filter) throws Exception {
-    ContactService contactSrv = getApplicationComponent(ContactService.class);
-    Map<String, String> resultMap = contactSrv.searchEmails(CalendarUtils.getCurrentUser(), filter) ;
-    List<ContactData> data = new ArrayList<ContactData>() ;
-    for(String ct : resultMap.keySet()) {
-      String id  = ct ;
-      String value = resultMap.get(id) ; 
-      if(resultMap.get(id) != null && resultMap.get(id).trim().length() > 0) {
-        if(value.lastIndexOf(Utils.SPLIT) > 0) {
-          String fullName = value.substring(0,value.lastIndexOf(Utils.SPLIT)) ;
-          String email = value.substring(value.lastIndexOf(Utils.SPLIT) + Utils.SPLIT.length()) ;
-          if(!CalendarUtils.isEmpty(email)) data.add(new ContactData(id, fullName, email)) ;
-        }
-      }
-    }
-    setContactList(data);
-  }
+   
   
   @SuppressWarnings({ "unchecked", "deprecation" })
   public List<ContactData> getContactList() {
@@ -215,6 +180,9 @@ public class UIAddressForm extends UIForm implements UIPopupComponent {
       }
       List<String> listMail = Arrays.asList( sb.toString().split(CalendarUtils.COMMA)) ; 
       String info = null ;
+      
+      //TODO update this for new code
+      /**
       for(ContactData c : uiForm.getCheckedContact()) {
         if(!uiForm.checkedList_.contains(c.getId())){
           Contact con = new Contact() ;
@@ -234,6 +202,8 @@ public class UIAddressForm extends UIForm implements UIPopupComponent {
           if(info != null) sb.append(info.replace(";", ",")) ;
         }
       }
+      **/
+      
       if(uiTaskForm != null) {
         uiTaskForm.setSelectedTab(UITaskForm.TAB_TASKREMINDER) ;
         uiTaskForm.setEmailAddress(sb.toString()) ;
@@ -294,6 +264,8 @@ public class UIAddressForm extends UIForm implements UIPopupComponent {
       UIAddressForm uiForm = event.getSource();  
       String text = uiForm.getUIStringInput(UIAddressForm.FIELD_KEYWORD).getValue() ;
       String category = uiForm.getUIFormSelectBox(UIAddressForm.FIELD_GROUP).getValue() ;
+      //TODO update code there
+      /**
       if(category.equals(NewUserListener.DEFAULTGROUP)) category = category + CalendarUtils.getCurrentUser() ;
       uiForm.selectedAddressId_ = category ;
       try {
@@ -307,7 +279,9 @@ public class UIAddressForm extends UIForm implements UIPopupComponent {
         event.getRequestContext().addUIComponentToUpdateByAjax(uiForm) ;
       } catch (Exception e) {
         event.getRequestContext().getUIApplication().addMessage(new ApplicationMessage("UIAddressForm.msg.keyword-error", null)) ;
-        }
+      }
+      **/
+      
     }
   }
   static  public class ChangeGroupActionListener extends EventListener<UIAddressForm> {
